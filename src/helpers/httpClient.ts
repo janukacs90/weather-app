@@ -9,7 +9,6 @@ const GET = async (endpoint: string, headers: any = {}) => {
       },
     })
       .then(respond => {
-        console.log('eee', respond);
         if (respond.status === 200) {
           return respond.json();
         } else {

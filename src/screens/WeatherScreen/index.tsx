@@ -1,13 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {useSelector} from 'react-redux';
+import {WeatherItem} from '../../components';
+import {loadWeatherData} from '../../store/actions';
 import {IAppState} from '../../store/interfaces/app.interface';
 import {IWeather} from '../../store/interfaces/weather.interfaces';
 
 const WeatherScreen = props => {
+  const {lat, lon} = props.route.params;
+  const dispatch = useDispatch();
   const weather: IWeather = useSelector((state: IAppState) => state.weather);
 
-  const loadData = () => {};
+  useEffect(() => {
+    loadData();
+    console.log(weather.data);
+  }, []);
+
+  const loadData = async () => {
+    await dispatch(loadWeatherData(lat, lon));
+  };
 
   return (
     <View style={styles.container}>
@@ -16,12 +28,7 @@ const WeatherScreen = props => {
         onRefresh={() => loadData()}
         refreshing={weather.loading}
         style={styles.listStyle}
-        renderItem={item => (
-        //   <GeoFlatListItem
-        //     details={item.item}
-        //     onPress={() => geoSelect(item.item)}
-        //   />
-        )}
+        renderItem={item => <WeatherItem details={item.item} />}
       />
     </View>
   );

@@ -1,1 +1,2 @@
-export {default as Weather} from './Weather';
+export {default as LocationScreen} from './LocationScreen';
+export {default as WeatherScreen} from './WeatherScreen';

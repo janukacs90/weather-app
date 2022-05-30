@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import colors from '../../helpers/colors';
 import {ICity} from '../../store/interfaces/geo.interface';
 
@@ -14,6 +14,7 @@ const GeoFlatListItem = ({details, onPress}: IProps) => {
       <Text style={style.textStyle}>
         {details.name} - {details.country}
       </Text>
+      <Text style={style.stateText}>{details.state}</Text>
     </TouchableOpacity>
   );
 };
@@ -21,11 +22,15 @@ const GeoFlatListItem = ({details, onPress}: IProps) => {
 const style = StyleSheet.create({
   itemStyle: {
     borderBottomColor: colors.gray150,
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     padding: 15,
   },
   textStyle: {
     fontWeight: 'bold',
+  },
+  stateText: {
+    marginTop: 5,
+    color: colors.gray500,
   },
 });
 

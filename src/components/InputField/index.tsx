@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, TextInput, StyleSheet} from 'react-native';
+import colors from '../../helpers/colors';
 
 interface IProps {
   _placeholder?: string;
@@ -13,6 +14,7 @@ const InputField = ({_placeholder, onChangeText}: IProps) => {
         style={styles.inputStyle}
         onChangeText={text => onChangeText(text)}
         placeholder={_placeholder}
+        clearButtonMode="always"
       />
     </View>
   );
@@ -20,7 +22,7 @@ const InputField = ({_placeholder, onChangeText}: IProps) => {
 
 const styles = StyleSheet.create({
   inputStyle: {
-    borderColor: '#1b1b1b',
+    borderColor: colors.gray200,
     borderWidth: 1,
     padding: 10,
     fontSize: 15,

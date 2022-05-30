@@ -8,7 +8,7 @@ export const GEO_FETCH_ERROR = 'GEO_FETCH_ERROR';
 const initialState: IGeo = {
   cityList: [],
   searchCity: '',
-  loading: true,
+  loading: false,
   error: '',
 };
 

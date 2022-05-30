@@ -8,13 +8,10 @@ interface IProps {
   disabled: boolean;
 }
 
-const CustomButton = ({name, onPress, disabled}: IProps) => {
+const CustomButton = ({name, onPress}: IProps) => {
   return (
     <View>
-      <TouchableOpacity
-        // disabled={disabled}
-        style={styles.buttonStyle}
-        onPress={onPress}>
+      <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
         <Text style={styles.textStyle} numberOfLines={1}>
           {name}
         </Text>
@@ -28,7 +25,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.twitterBlue,
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     borderRadius: 5,
   },
   textStyle: {

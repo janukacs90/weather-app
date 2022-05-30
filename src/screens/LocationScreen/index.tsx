@@ -1,11 +1,15 @@
 import React from 'react';
-import {View, StyleSheet, FlatList, Alert} from 'react-native';
+import {View, StyleSheet, FlatList, Text} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {CustomButton, InputField, GeoFlatListItem} from '../../components';
+import {AlertTypes} from '../../config/config';
+import colors from '../../helpers/colors';
+import {appDisplayMessage} from '../../helpers/utils';
 import {cityNameChange, loadGeo} from '../../store/actions';
 import {IAppState} from '../../store/interfaces/app.interface';
 import {ICity, IGeo} from '../../store/interfaces/geo.interface';
+import {GEO_FETCH_ERROR} from '../../store/reducers';
 
 const LocationScreen = props => {
   const dispatch = useDispatch();
@@ -15,7 +19,11 @@ const LocationScreen = props => {
     if (geo.searchCity) {
       dispatch(loadGeo(geo.searchCity));
     } else {
-      Alert.alert('Error', 'Invalid City Name');
+      dispatch({
+        type: GEO_FETCH_ERROR,
+        payload: 'City name cannot be empty.',
+      });
+      appDisplayMessage(AlertTypes.danger, 'City name cannot be empty.');
     }
   };
 
@@ -31,7 +39,9 @@ const LocationScreen = props => {
       <View style={styles.searchBar}>
         <InputField
           onChangeText={(text: string) => dispatch(cityNameChange(text))}
+          _placeholder={'Please enter city name'}
         />
+        <View style={styles.gap} />
         <CustomButton
           disabled={!geo.searchCity}
           name={'Search'}
@@ -44,6 +54,17 @@ const LocationScreen = props => {
         onRefresh={() => loadData()}
         refreshing={geo.loading}
         style={styles.listStyle}
+        contentContainerStyle={[
+          styles.emptyListContainer,
+          {
+            justifyContent: geo.cityList.length === 0 ? 'center' : 'flex-start',
+          },
+        ]}
+        ListEmptyComponent={() => (
+          <View style={styles.emptyListView}>
+            <Text>List is empty</Text>
+          </View>
+        )}
         renderItem={item => (
           <GeoFlatListItem
             details={item.item}
@@ -60,12 +81,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
+    borderBottomColor: colors.gray100,
+    borderBottomWidth: 0.5,
   },
   container: {
     flex: 1,
+    backgroundColor: colors.primaryWhite,
   },
   listStyle: {
     flex: 1,
+  },
+  gap: {
+    margin: 10,
+  },
+  emptyListContainer: {
+    flex: 1,
+  },
+  emptyListView: {
+    alignItems: 'center',
   },
 });
 

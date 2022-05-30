@@ -19,6 +19,7 @@ function* getCityData(action: any) {
       payload: data,
     });
   } catch (error) {
+    console.log(error);
     yield put({
       type: GEO_FETCH_ERROR,
       payload: error,

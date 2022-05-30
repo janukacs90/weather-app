@@ -10,4 +10,5 @@ export interface ICity {
   lat: number;
   lon: number;
   country: string;
+  state: string;
 }
